@@ -8,7 +8,7 @@ package proyectoprograobj;
  *
  * @author Usuario
  */
-public class Persona {
+public abstract class Persona {
     protected String nombre;
     protected String apellidos;
 
