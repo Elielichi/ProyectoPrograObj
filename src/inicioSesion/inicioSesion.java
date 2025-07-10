@@ -126,37 +126,41 @@ public class inicioSesion extends javax.swing.JFrame {
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
         // TODO add your handling code here:
         usuario[] pass = new usuario[3];
-        usuario a = new usuario("a","2");
-        usuario b = new usuario("b","1232323");
-        usuario c = new usuario("c","788495");
+        usuario a = new usuario("a","20", "Lourdes", "Curahua");
+        usuario b = new usuario("b","1232323", "Elina", "Plasencia");
+        usuario c = new usuario("c","788495", "Juan Diego", "Jauregui");
         pass[0]=a;
         pass[1]=b;
         pass[2]=c;
-        boolean coincide = false;
+        
         boolean vacio = true;
+        String userIngresado = jtuser.getText().trim();
+        String passIngresada = new String(jpassword.getPassword());
+        
         if(jtuser.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null, "Por favor ingrese un usuario");
             vacio = false;
         }
-        else if(jpassword.getText().trim().equals("")){
+        if(jpassword.getText().trim().equals("")){
              JOptionPane.showMessageDialog(null, "Por favor ingrese una contraseña");
              vacio = false;
         }
-        else{
-            for (int i = 0; i < pass.length; i++) {
-                if(pass[i].revisarUsuario(jtuser.getText(), new String(jpassword.getPassword()))){
-                    coincide = true;
-                    break;
-            }
+        boolean coincide = false;
+        for (usuario u : pass) {
+        if (u.revisarUsuario(userIngresado, passIngresada)) {
+            coincide = true;
+            break;
         }
         }
-        if(coincide){
-            Menu mainMenu = new Menu();
-            mainMenu.setVisible(true);
-            this.dispose();            
-        }
-        else if(vacio){
-            JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrecta","Aviso",JOptionPane.ERROR_MESSAGE);
+        
+        if (coincide) {
+        Menu mainMenu = new Menu();
+        mainMenu.setVisible(true);
+        this.dispose();
+        } 
+        else 
+        {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_bloginActionPerformed

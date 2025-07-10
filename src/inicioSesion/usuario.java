@@ -3,21 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package inicioSesion;
-
+import proyectoprograobj.Persona;
 /**
  *
  * @author Admin
  */
-public class usuario {
-    private String nombre;
+public class usuario extends Persona{
+    private String IDusuario;
     private String contraseña;
 
-    public String getNombre() {
-        return nombre;
+    public usuario(String IDuser, String contraseña, String nombre, String apellidos) {
+        super(nombre, apellidos);
+        this.IDusuario = IDuser;
+        this.contraseña = contraseña;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getIDuser() {
+        return IDusuario;
+    }
+
+    public void setIDuser(String IDuser) {
+        this.IDusuario = IDuser;
     }
 
     public String getContraseña() {
@@ -28,10 +34,6 @@ public class usuario {
         this.contraseña = contraseña;
     }
 
-    public usuario(String nombre, String contraseña) {
-        this.nombre = nombre;
-        this.contraseña = contraseña;
-    }
     public boolean revisarUsuario(String ingresoUsuario, String ingresoCont){
         boolean valor = false;
         if(this.nombre.equals(ingresoUsuario)){
