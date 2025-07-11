@@ -23,6 +23,10 @@ public class inicioSesion extends javax.swing.JFrame {
      * Creates new form inicioSesion
      */
     public inicioSesion() {
+        pass[0] = a;
+        pass[1] = b;
+        pass[2] = c;
+        totalusuarios = 3;
         initComponents();
     }
 
@@ -143,11 +147,6 @@ public class inicioSesion extends javax.swing.JFrame {
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
         // TODO add your handling code here:
-        pass[0]=a;
-        pass[1]=b;
-        pass[2]=c;
-        totalusuarios = 3;
-        
         boolean vacio = true;
         String userIngresado = jtuser.getText().trim();
         String passIngresada = new String(jpassword.getPassword());
