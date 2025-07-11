@@ -34,14 +34,8 @@ public class usuario extends Persona{
         this.contraseña = contraseña;
     }
 
-    public boolean revisarUsuario(String ingresoUsuario, String ingresoCont){
-        boolean valor = false;
-        if(this.nombre.equals(ingresoUsuario)){
-            if(this.contraseña.equals(ingresoCont)){
-            valor = true;
-            }
-        }
-        return valor;
+    public boolean revisarUsuario(String user, String pass) {
+    return this.IDusuario.equals(user) && this.contraseña.equals(pass);
     }
     
 }

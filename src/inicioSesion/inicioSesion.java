@@ -12,6 +12,12 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class inicioSesion extends javax.swing.JFrame {
+    private usuario[] pass = new usuario[4];
+    private int totalusuarios = 0;
+    usuario a = new usuario("a","20", "Lourdes", "Curahua");
+    usuario b = new usuario("b","1232323", "Elina", "Plasencia");
+    usuario c = new usuario("c","788495", "Juan Diego", "Jauregui");
+    
 
     /**
      * Creates new form inicioSesion
@@ -36,6 +42,7 @@ public class inicioSesion extends javax.swing.JFrame {
         jpassword = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +76,13 @@ public class inicioSesion extends javax.swing.JFrame {
 
         jLabel3.setText("Contraseña:");
 
+        jButton1.setText("Registrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,13 +90,15 @@ public class inicioSesion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(116, 116, 116)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jtuser, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -99,7 +115,9 @@ public class inicioSesion extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -125,13 +143,10 @@ public class inicioSesion extends javax.swing.JFrame {
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
         // TODO add your handling code here:
-        usuario[] pass = new usuario[3];
-        usuario a = new usuario("a","20", "Lourdes", "Curahua");
-        usuario b = new usuario("b","1232323", "Elina", "Plasencia");
-        usuario c = new usuario("c","788495", "Juan Diego", "Jauregui");
         pass[0]=a;
         pass[1]=b;
         pass[2]=c;
+        totalusuarios = 3;
         
         boolean vacio = true;
         String userIngresado = jtuser.getText().trim();
@@ -146,16 +161,19 @@ public class inicioSesion extends javax.swing.JFrame {
              vacio = false;
         }
         boolean coincide = false;
-        for (usuario u : pass) {
-        if (u.revisarUsuario(userIngresado, passIngresada)) {
+        for (int i = 0; i < totalusuarios; i++) 
+        {
+            if (pass[i].revisarUsuario(userIngresado, passIngresada)) 
+            {
             coincide = true;
             break;
-        }
+            }
         }
         
-        if (coincide) {
-        Menu mainMenu = new Menu();
-        mainMenu.setVisible(true);
+        if (coincide) 
+        {
+        JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+        new Visual.Menu().setVisible(true);
         this.dispose();
         } 
         else 
@@ -173,6 +191,46 @@ public class inicioSesion extends javax.swing.JFrame {
     private void jpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jpasswordActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (totalusuarios >= pass.length) 
+        {
+        JOptionPane.showMessageDialog(this, "Límite de usuarios alcanzado");
+        return;
+        }
+
+        String user = jtuser.getText().trim();
+        String contraseña = new String(jpassword.getPassword());
+
+        if (user.isEmpty() || contraseña.isEmpty()) 
+        {
+        JOptionPane.showMessageDialog(this, "Complete usuario y contraseña");
+        return;
+        }
+
+        // Puedes pedir también nombre y apellidos con nuevos campos
+        String nombre = JOptionPane.showInputDialog(this, "Ingrese nombre:");
+        String apellido = JOptionPane.showInputDialog(this, "Ingrese apellido:");
+
+        if (nombre == null || apellido == null || nombre.isEmpty() || apellido.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Nombre y apellido requeridos");
+        return;
+        }
+
+        // Verifica si el usuario ya existe
+        for (int i = 0; i < totalusuarios; i++) {
+        if (pass[i].getIDuser().equals(user)) {
+            JOptionPane.showMessageDialog(this, "El usuario ya existe");
+            return;
+        }
+        }
+
+        usuario nuevo = new usuario(user, contraseña, nombre, apellido);
+        pass[totalusuarios++] = nuevo;
+
+        JOptionPane.showMessageDialog(this, "Usuario registrado con éxito");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,6 +269,7 @@ public class inicioSesion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton blogin;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
